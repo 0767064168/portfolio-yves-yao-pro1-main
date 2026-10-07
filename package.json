@@ -1,0 +1,14 @@
+{
+  "name": "yves-yao-portfolio",
+  "version": "2.0.0",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace client",
+    "start": "npm run start --workspace server",
+    "dev": "node scripts/dev.js"
+  }
+}

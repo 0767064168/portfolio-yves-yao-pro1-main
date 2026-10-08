@@ -34,6 +34,44 @@ Le site utilise React et Vite pour l’interface, Express pour l’API et MySQL 
 
    Le serveur Express sert alors le client construit sur le port indiqué par `PORT` (3000 par défaut).
 
+## Déploiement sur Vercel + Render
+
+### Frontend Vercel
+
+- Importer le dépôt GitHub dans Vercel.
+- Définir le dossier racine du projet sur `client` si tu déclares le projet depuis le dépôt complet.
+- Build command : `npm install && npm run build`
+- Output directory : `dist`
+- Ajouter une variable d’environnement dans Vercel :
+
+  ```env
+  VITE_API_BASE_URL=https://ton-backend.render.com
+  VITE_ASSETS_BASE_URL=https://ton-backend.render.com
+  ```
+
+- Le fichier `vercel.json` à la racine du dépôt permet de réécrire les routes SPA vers `index.html` pour les pages comme `/admin` et `/projects/:id`.
+
+### Backend Render
+
+- Créer un service Web Node.js avec le dossier `server` comme racine.
+- Build command : `npm install`
+- Start command : `node src/index.js`
+- Définir les variables d’environnement suivantes :
+
+  ```env
+  PORT=10000
+  APP_URL=https://ton-front.vercel.app
+  SESSION_SECRET=remplacer-par-une-cle-secrete-longue
+  DB_HOST=host-mysql
+  DB_PORT=3306
+  DB_NAME=portfolio_yves_yao
+  DB_USER=utilisateur
+  DB_PASSWORD=motdepasse
+  COOKIE_SECURE=true
+  ```
+
+- Les uploads de médias restent sur le disque du backend et doivent donc être conservés sur le service backend, pas sur Vercel.
+
 ## Administration
 
 - `/admin/setup` permet de créer le premier administrateur uniquement si aucun compte n’existe. Utiliser un mot de passe d’au moins 12 caractères.
